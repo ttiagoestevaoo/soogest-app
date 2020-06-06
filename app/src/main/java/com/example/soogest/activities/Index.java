@@ -1,6 +1,8 @@
 package com.example.soogest.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,7 +14,16 @@ import com.example.soogest.R;
 import com.example.soogest.http_requests.HttpCall;
 import com.example.soogest.http_requests.HttpRequest;
 
+import com.example.soogest.http_requests.OkHttpRequest;
+import com.example.soogest.http_requests.UserAuthentication;
+import com.google.gson.Gson;
+
 import java.util.HashMap;
+
+import okhttp3.Request;
+import okhttp3.Response;
+import responses.AccessToken;
+import responses.ResponseAPI;
 
 
 public class Index extends AppCompatActivity {
@@ -23,46 +34,20 @@ public class Index extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_projeto);
 
+
+
         btnLogout = findViewById(R.id.btnLogout);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                textIndex = findViewById(R.id.textIndex);
-                try {
-
-                    Toast.makeText(getApplicationContext(),"Começando criar usuario", Toast.LENGTH_SHORT).show();
-
-                    HttpCall htppCall = new HttpCall();
-                    htppCall.setMethodType(HttpCall.POST);
-                    htppCall.setUrl("http://soogest-api.herokuapp.com/api/");
-
-                    HashMap<String,String> params = new HashMap<>();
-
-                    htppCall.setParams(params);
-
-                    new HttpRequest(){
-                        @Override
-                        public void onResponse(String response) {
-                            super.onResponse(response);
-                            Toast.makeText(getApplicationContext(),response, Toast.LENGTH_SHORT).show();
-
-                        }
-                    }.execute(htppCall);
-                    Toast.makeText(getApplicationContext(),"Sucesso", Toast.LENGTH_SHORT).show();
-                }catch(Exception e){
-                    Toast.makeText(getApplicationContext(),"Erro",
-                            Toast.LENGTH_LONG).show();
-                }
-
-
-//                Intent main = new Intent(
-//                        getApplicationContext(),
-//                        MainActivity.class
-//                );
-//                startActivity(main);
-//                finish();
+                Intent main = new Intent(
+                        getApplicationContext(),
+                        MainActivity.class
+                );
+                startActivity(main);
+                finish();
             }
         });
     }
