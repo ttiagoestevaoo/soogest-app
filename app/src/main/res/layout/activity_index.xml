@@ -6,17 +6,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/btnTar"
+        android:layout_width="137dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="120dp"
+        android:text="Tarefas"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.81"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <Button
+        android:id="@+id/btnProj"
+        android:layout_width="137dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="120dp"
+        android:text="Projetos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.211"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342" />
+
     <TextView
         android:id="@+id/textIndex"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bem vindo usuário"
+        android:text="Bem vindo ao Soogest!"
+        android:textColor="#00BFFF	"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.275" />
+        app:layout_constraintVertical_bias="0.219" />
 
     <Button
         android:id="@+id/btnLogout"
@@ -28,5 +56,5 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.606" />
+        app:layout_constraintVertical_bias="0.907" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.soogest.R;
 import com.example.soogest.http_requests.HttpCall;
 import com.example.soogest.http_requests.HttpRequest;
-import com.example.soogest.http_requests.UserAuthentication;
 
 import java.util.HashMap;
 
@@ -22,7 +21,7 @@ public class Index extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
+        setContentView(R.layout.activity_index_projeto);
 
         btnLogout = findViewById(R.id.btnLogout);
 
