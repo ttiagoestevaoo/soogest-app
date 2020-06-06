@@ -20,11 +20,7 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import responses.AccessToken;
+import responses.AccessTokenResponse;
 import responses.ResponseAPI;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
         return sharedPreferences.getString("token","");
     }
 
+    public void resetToken(){
+        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "");
+        editor.apply();
+    }
+
     public void setToken(String token){
         SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -66,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         textResetPassword = findViewById(R.id.textResetPassword);
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
+
 
         if(getToken() != ""){
             Intent intentIndex = new Intent(getApplicationContext(), Index.class);
@@ -115,15 +119,16 @@ public class MainActivity extends AppCompatActivity {
                     new OkHttpRequest(){
                         @Override
                         public void onResponse(ResponseAPI response) {
+
                             if(response.getResponseCode() == ResponseAPI.HTTP_OK){
                                 super.onResponse(response);
 
 
                                 Gson gson = new Gson();
-                                AccessToken accessToken = gson.fromJson(response.getResponseBody(), AccessToken.class);
+                                AccessTokenResponse accessToken = gson.fromJson(response.getResponseBody(), AccessTokenResponse.class);
 
                                 setToken(accessToken.getToken_type() + " " + accessToken.getAccess_token());
-
+                                Toast.makeText(getApplicationContext(), getToken(), Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Login realizado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intentIndex = new Intent(getApplicationContext(), Index.class);
                                 startActivity(intentIndex);

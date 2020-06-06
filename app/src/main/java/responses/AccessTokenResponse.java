@@ -1,6 +1,6 @@
 package responses;
 
-public class AccessToken {
+public class AccessTokenResponse {
 
     private String token_type;
     private String expires_in;

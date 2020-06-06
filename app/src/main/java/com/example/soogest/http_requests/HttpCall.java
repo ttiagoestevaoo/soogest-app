@@ -6,9 +6,18 @@ public class HttpCall {
     public static final int GET = 1 ;
     public static final int POST = 2;
 
+    public String token = "";
     private String url;
     private int methodType;
     private HashMap<String,String> params;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public String getUrl() {
         return url;

@@ -6,27 +6,23 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.soogest.R;
 import com.example.soogest.http_requests.HttpCall;
-
 import com.example.soogest.http_requests.OkHttpRequest;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-import responses.AccessTokenResponse;
 import responses.ResponseAPI;
 import responses.UserResponse;
 
 
-public class Index extends AppCompatActivity {
-    Button btnLogout, btnIndexProject, btnIndexTarefas;
-    TextView textIndex;
+public class IndexProject extends AppCompatActivity {
+    Button btnCancel, btnSave;
 
     public String getToken(){
         SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
@@ -36,13 +32,11 @@ public class Index extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index);
-
-        textIndex = findViewById(R.id.textIndex);
+        setContentView(R.layout.activity_index_projeto);
 
         HttpCall htppCall = new HttpCall();
         htppCall.setMethodType(HttpCall.GET);
-        htppCall.setUrl("http://soogest-api.herokuapp.com/api/user");
+        htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects");
         htppCall.setToken(getToken());
         HashMap<String,String> params = new HashMap<>();
         htppCall.setParams(params);
@@ -53,9 +47,6 @@ public class Index extends AppCompatActivity {
                 if(response.getResponseCode() == ResponseAPI.HTTP_OK){
                     super.onResponse(response);
                     Gson gson = new Gson();
-                    UserResponse userResponse = gson.fromJson(response.getResponseBody(), UserResponse.class);
-
-                    textIndex.setText("Bem vindo " + userResponse.getName());
                     Log.d("response",response.getResponseBody());
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Log.d("objeto", response.getResponseBody());
@@ -69,37 +60,6 @@ public class Index extends AppCompatActivity {
 
             }
         }.execute(htppCall);
-
-        btnLogout = findViewById(R.id.btnLogout);
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent main = new Intent(
-                        getApplicationContext(),
-                        MainActivity.class
-                );
-                startActivity(main);
-                finish();
-            }
-        });
-
-        btnIndexProject = findViewById(R.id.btnIndexProject);
-
-        btnIndexProject.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent main = new Intent(
-                        getApplicationContext(),
-                        IndexProject.class
-                );
-                startActivity(main);
-                finish();
-            }
-        });
-
 
     }
 }

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -39,9 +40,9 @@ public class OkHttpRequest extends AsyncTask<HttpCall, String, ResponseAPI> {
 
                 Request request = new Request.Builder()
                         .url(httpCall.getUrl())
+                        .headers(getHeader(httpCall))
                         .post(this.getFormBuilder(httpCall.getParams(),HttpCall.POST))
                         .build();
-                Log.d("request",request.toString());
                 response = client.newCall(request).execute();
                 responseAPI.setResponseCode(response.code());
                 responseAPI.setResponseBody(response.body().string());
@@ -52,6 +53,7 @@ public class OkHttpRequest extends AsyncTask<HttpCall, String, ResponseAPI> {
             }else{
                 Request request = new Request.Builder()
                         .url(httpCall.getUrl())
+                        .headers(getHeader(httpCall))
                         .build();
                 response = client.newCall(request).execute();
                 responseAPI.setResponseCode(response.code());
@@ -93,6 +95,16 @@ public class OkHttpRequest extends AsyncTask<HttpCall, String, ResponseAPI> {
         formBody.build();
 
         return formBody.build();
+    }
+
+    private Headers getHeader(HttpCall httpCall){
+        HashMap<String,String> header = new HashMap<>();
+        header.put("Content-Type","application/json");
+        if (httpCall.getToken() != ""){
+            header.put("Authorization",httpCall.getToken());
+        }
+        Headers headerBuild = Headers.of(header);
+        return headerBuild;
     }
 
 }
