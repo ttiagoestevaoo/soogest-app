@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         return sharedPreferences.getString("token","");
     }
 
-    public void resetToken(){
+   public void resetToken(){
         SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", "");
