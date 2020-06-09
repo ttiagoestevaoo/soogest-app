@@ -26,7 +26,7 @@ import responses.UserResponse;
 
 
 public class ShowProject extends AppCompatActivity {
-    Button btnProjectShowBack;
+    Button btnProjectShowBack,btnProjectShowDestroy,btnProjectShowEdit;
     TextView textProjectName, textProjectDescription, textProjectDeadline;
 
     public void resetToken(){
@@ -63,6 +63,19 @@ public class ShowProject extends AppCompatActivity {
             }
         });
 
+        btnProjectShowDestroy = findViewById(R.id.btnProjectShowBack);
+
+        btnProjectShowDestroy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent main = new Intent(
+                        getApplicationContext(),
+                        IndexProject.class
+                );
+                startActivity(main);
+                finish();
+            }
+        });
 
         Intent itProject = getIntent();
         final ProjectResponse project = (ProjectResponse) itProject.getExtras().getSerializable("project");
@@ -84,7 +97,7 @@ public class ShowProject extends AppCompatActivity {
                 if(response.getResponseCode() == ResponseAPI.HTTP_OK){
                     super.onResponse(response);
                     Gson gson = new Gson();
-                    ProjectResponse projectApi = gson.fromJson(response.getResponseBody(), ProjectResponse.class);
+                    final ProjectResponse projectApi = gson.fromJson(response.getResponseBody(), ProjectResponse.class);
                     textProjectName.setText(projectApi.getName());
                     textProjectDescription.setText(projectApi.getDescription());
                     textProjectDeadline.setText(projectApi.getDeadline());
@@ -107,6 +120,22 @@ public class ShowProject extends AppCompatActivity {
 
             }
         }.execute(htppCall);
+
+        btnProjectShowEdit = findViewById(R.id.btnProjectShowEdit);
+
+        btnProjectShowEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProject = new Intent(
+                        getApplicationContext(),
+                        EditProject.class
+                );
+                editProject.putExtra("project", project);
+
+                startActivity(editProject);
+
+            }
+        });
 
 
 

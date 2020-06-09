@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,11 +23,12 @@ import responses.ProjectResponse;
 import responses.ResponseAPI;
 
 
-public class CreateProject extends AppCompatActivity {
+public class EditProject extends AppCompatActivity {
     Button btnProjectCreateBack,btnProjectCreateSave;
     EditText editProjectCreateName,editProjectCreateDescription,editProjectCreateDeadline;
-    TextView textProjectCreate;
     ListView listProjects;
+    TextView textProjectCreate;
+
 
 
 
@@ -63,7 +62,53 @@ public class CreateProject extends AppCompatActivity {
         setContentView(R.layout.activity_create_projeto);
 
         textProjectCreate = findViewById(R.id.textProjectCreate);
-        textProjectCreate.setText("Novo projeto");
+        textProjectCreate.setText("Editar projeto");
+
+        Intent itProject = getIntent();
+        final ProjectResponse project = (ProjectResponse) itProject.getExtras().getSerializable("project");
+
+        editProjectCreateName = findViewById(R.id.editProjectCreateName);
+        editProjectCreateDeadline = findViewById(R.id.editProjectCreateDeadline);
+        editProjectCreateDescription = findViewById(R.id.editProjectCreateDescription);
+
+        editProjectCreateName.setText(project.getName());
+        editProjectCreateDescription.setText(project.getDescription());
+        editProjectCreateDeadline.setText(project.getDeadline());
+
+        HttpCall htppCall = new HttpCall();
+        htppCall.setMethodType(HttpCall.GET);
+        htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects/" + project.getId());
+        htppCall.setToken(getToken());
+        HashMap<String,String> params = new HashMap<>();
+        htppCall.setParams(params);
+
+        new OkHttpRequest(){
+            @Override
+            public void onResponse(ResponseAPI response) {
+                if(response.getResponseCode() == ResponseAPI.HTTP_OK){
+                    super.onResponse(response);
+                    Gson gson = new Gson();
+                    ProjectResponse projectResponse = gson.fromJson(response.getResponseBody(), ProjectResponse.class);
+                    editProjectCreateName.setText(projectResponse.getName());
+                    editProjectCreateDescription.setText(projectResponse.getDescription());
+                    editProjectCreateDeadline.setText(projectResponse.getDeadline());
+
+                }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
+                    Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
+                    resetToken();
+                    Intent main = new Intent(
+                            getApplicationContext(),
+                            MainActivity.class
+                    );
+                    startActivity(main);
+                    finish();
+                }else{
+                    Toast.makeText(getApplicationContext(),"Aconteceu alguma coisa errada no servidor", Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        }.execute(htppCall);
 
         btnProjectCreateBack = findViewById(R.id.btnProjectCreateBack);
         btnProjectCreateBack.setOnClickListener(new View.OnClickListener() {
@@ -82,15 +127,13 @@ public class CreateProject extends AppCompatActivity {
         btnProjectCreateSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editProjectCreateName = findViewById(R.id.editProjectCreateName);
-                editProjectCreateDeadline = findViewById(R.id.editProjectCreateDeadline);
-                editProjectCreateDescription = findViewById(R.id.editProjectCreateDescription);
+
 
 
                 if(validacao()){
                     HttpCall htppCall = new HttpCall();
-                    htppCall.setMethodType(HttpCall.POST);
-                    htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects");
+                    htppCall.setMethodType(HttpCall.PUT);
+                    htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects/" + project.getId());
                     htppCall.setToken(getToken());
                     HashMap<String,String> params = new HashMap<>();
                     params.put("name", editProjectCreateName.getText().toString());
@@ -103,7 +146,7 @@ public class CreateProject extends AppCompatActivity {
                         public void onResponse(ResponseAPI response) {
                             if(response.getResponseCode() == ResponseAPI.HTTP_OK){
                                 super.onResponse(response);
-                                Toast.makeText(getApplicationContext(),"Projeto criado com sucesso", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Projeto editado com sucesso", Toast.LENGTH_SHORT).show();
 
                                 Intent main = new Intent(
                                         getApplicationContext(),
@@ -121,9 +164,9 @@ public class CreateProject extends AppCompatActivity {
                                 startActivity(main);
                                 finish();
                             }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
-                                Toast.makeText(getApplicationContext(),"Não foi posśivel criar o projeto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Não foi posśivel salvar o projeto", Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(getApplicationContext(),"Aconteuceu alguma coisa no servidor", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Aconteceu alguma coisa errada no servidor", Toast.LENGTH_SHORT).show();
 
                             }
 

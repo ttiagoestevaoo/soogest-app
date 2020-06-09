@@ -2,18 +2,12 @@ package com.example.soogest.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.soogest.R;
-import com.example.soogest.http_requests.HttpCall;
-import com.example.soogest.http_requests.HttpRequest;
-
-import java.util.HashMap;
 
 
 public class CreateUser extends AppCompatActivity {

@@ -50,6 +50,34 @@ public class OkHttpRequest extends AsyncTask<HttpCall, String, ResponseAPI> {
                 return responseAPI;
 
 
+            }else if(httpCall.getMethodType() == HttpCall.PUT){
+
+                Request request = new Request.Builder()
+                        .url(httpCall.getUrl())
+                        .headers(getHeader(httpCall))
+                        .put(this.getFormBuilder(httpCall.getParams(),HttpCall.PUT))
+                        .build();
+                response = client.newCall(request).execute();
+                responseAPI.setResponseCode(response.code());
+                responseAPI.setResponseBody(response.body().string());
+
+                return responseAPI;
+
+
+            }else if(httpCall.getMethodType() == HttpCall.DELETE){
+
+                Request request = new Request.Builder()
+                        .url(httpCall.getUrl())
+                        .headers(getHeader(httpCall))
+                        .delete(this.getFormBuilder(httpCall.getParams(),HttpCall.DELETE))
+                        .build();
+                response = client.newCall(request).execute();
+                responseAPI.setResponseCode(response.code());
+                responseAPI.setResponseBody(response.body().string());
+
+                return responseAPI;
+
+
             }else{
                 Request request = new Request.Builder()
                         .url(httpCall.getUrl())

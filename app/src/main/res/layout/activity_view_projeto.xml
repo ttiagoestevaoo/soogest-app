@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.944" />
 
     <Button
-        android:id="@+id/buttEdit"
+        android:id="@+id/btnProjectShowEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EDITAR"
@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.944" />
 
     <Button
-        android:id="@+id/butExc"
+        android:id="@+id/btnProjectShowDestroy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EXCLUIR"
