@@ -63,19 +63,7 @@ public class ShowProject extends AppCompatActivity {
             }
         });
 
-        btnProjectShowDestroy = findViewById(R.id.btnProjectShowBack);
 
-        btnProjectShowDestroy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent main = new Intent(
-                        getApplicationContext(),
-                        IndexProject.class
-                );
-                startActivity(main);
-                finish();
-            }
-        });
 
         Intent itProject = getIntent();
         final ProjectResponse project = (ProjectResponse) itProject.getExtras().getSerializable("project");
@@ -114,7 +102,7 @@ public class ShowProject extends AppCompatActivity {
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
                     Toast.makeText(getApplicationContext(),"Não foi possível atualizar os dados do projeto", Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Aconteuceu alguma coisa no servidor", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"Aconteceu alguma coisa errada no servidor", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -134,6 +122,52 @@ public class ShowProject extends AppCompatActivity {
 
                 startActivity(editProject);
 
+            }
+        });
+
+        btnProjectShowDestroy = findViewById(R.id.btnProjectShowDestroy);
+
+        btnProjectShowDestroy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HttpCall htppCall = new HttpCall();
+                htppCall.setMethodType(HttpCall.DELETE);
+                htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects/" + project.getId());
+                htppCall.setToken(getToken());
+                HashMap<String,String> params = new HashMap<>();
+                htppCall.setParams(params);
+                new OkHttpRequest(){
+                    @Override
+                    public void onResponse(ResponseAPI response) {
+                        if(response.getResponseCode() == ResponseAPI.HTTP_OK){
+                            super.onResponse(response);
+                            Toast.makeText(getApplicationContext(),"Projeto excluído com sucesso", Toast.LENGTH_SHORT).show();
+
+                        }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
+                            Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
+                            resetToken();
+                            Intent indexProjects = new Intent(
+                                    getApplicationContext(),
+                                    IndexProject.class
+                            );
+                            startActivity(indexProjects);
+                            finish();
+                        }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
+                            Toast.makeText(getApplicationContext(),"Não foi possível atualizar os dados do projeto", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Aconteceu alguma coisa errada no servidor", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                }.execute(htppCall);
+
+                Intent indexProject = new Intent(
+                        getApplicationContext(),
+                        IndexProject.class
+                );
+                startActivity(indexProject);
+                finish();
             }
         });
 
