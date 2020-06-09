@@ -61,7 +61,7 @@ public class Index extends AppCompatActivity {
                     super.onResponse(response);
                     Gson gson = new Gson();
                     UserResponse userResponse = gson.fromJson(response.getResponseBody(), UserResponse.class);
-                    textIndex.setText("Bem vindo " + userResponse.getName());
+                    textIndex.setText("Bem vindo " + userResponse.getName() + "!");
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Log.d("objeto", response.getResponseBody());
                     Log.d("code", String.valueOf(response.getResponseCode()));
