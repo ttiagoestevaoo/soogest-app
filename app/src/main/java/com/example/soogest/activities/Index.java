@@ -33,6 +33,13 @@ public class Index extends AppCompatActivity {
         return sharedPreferences.getString("token","");
     }
 
+    public void resetToken(){
+        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("token", "");
+        editor.apply();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +61,7 @@ public class Index extends AppCompatActivity {
                     super.onResponse(response);
                     Gson gson = new Gson();
                     UserResponse userResponse = gson.fromJson(response.getResponseBody(), UserResponse.class);
-
                     textIndex.setText("Bem vindo " + userResponse.getName());
-                    Log.d("response",response.getResponseBody());
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Log.d("objeto", response.getResponseBody());
                     Log.d("code", String.valueOf(response.getResponseCode()));
@@ -76,12 +81,45 @@ public class Index extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent main = new Intent(
-                        getApplicationContext(),
-                        MainActivity.class
-                );
-                startActivity(main);
-                finish();
+                HttpCall htppCall = new HttpCall();
+                htppCall.setMethodType(HttpCall.POST);
+                htppCall.setUrl("http://soogest-api.herokuapp.com/api/logout");
+                htppCall.setToken(getToken());
+                HashMap<String,String> params = new HashMap<>();
+                htppCall.setParams(params);
+
+                new OkHttpRequest(){
+                    @Override
+                    public void onResponse(ResponseAPI response) {
+                        if(response.getResponseCode() == ResponseAPI.HTTP_OK){
+                            Toast.makeText(getApplicationContext(),"Logout realizado com sucesso", Toast.LENGTH_SHORT).show();
+                            resetToken();
+
+                            Intent main = new Intent(
+                                    getApplicationContext(),
+                                    MainActivity.class
+                            );
+                            startActivity(main);
+                            finish();
+                        }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
+                            resetToken();
+
+                            Intent main = new Intent(
+                                    getApplicationContext(),
+                                    MainActivity.class
+                            );
+                            startActivity(main);
+                            finish();
+                            Toast.makeText(getApplicationContext(),"Logout realizado com sucesso", Toast.LENGTH_SHORT).show();
+                        }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
+                            Toast.makeText(getApplicationContext(),"Não foi possível realizar o logout", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Alguma coisa deu errado no servidor, e não foi possível realizar o logout", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                }.execute(htppCall);
+
             }
         });
 

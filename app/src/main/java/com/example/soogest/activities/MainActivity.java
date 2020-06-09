@@ -128,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                                 AccessTokenResponse accessToken = gson.fromJson(response.getResponseBody(), AccessTokenResponse.class);
 
                                 setToken(accessToken.getToken_type() + " " + accessToken.getAccess_token());
-                                Toast.makeText(getApplicationContext(), getToken(), Toast.LENGTH_SHORT).show();
                                 Toast.makeText(getApplicationContext(),"Login realizado com sucesso", Toast.LENGTH_SHORT).show();
                                 Intent intentIndex = new Intent(getApplicationContext(), Index.class);
                                 startActivity(intentIndex);

@@ -26,6 +26,8 @@
         <activity android:name=".activities.ResetPassword" />
         <activity android:name=".activities.Index" />
         <activity android:name=".activities.IndexProject" />
+        <activity android:name=".activities.ShowProject" />
+        <activity android:name=".activities.CreateProject" />
 
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
