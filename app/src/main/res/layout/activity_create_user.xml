@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/btnCancel"
+        android:id="@+id/btnUserCreateBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="CANCELAR"
@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.83" />
 
     <Button
-        android:id="@+id/btnSave"
+        android:id="@+id/btnUserCreateSave"
         android:layout_width="88dp"
         android:layout_height="48dp"
         android:layout_marginTop="120dp"
@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.77" />
 
     <EditText
-        android:id="@+id/editName"
+        android:id="@+id/editUserCreateName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="0.298" />
 
     <EditText
-        android:id="@+id/editEmail"
+        android:id="@+id/editUserCreateEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -60,7 +60,7 @@
         app:layout_constraintVertical_bias="0.422" />
 
     <EditText
-        android:id="@+id/editPassword"
+        android:id="@+id/editUserCreatePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="52dp"
@@ -75,7 +75,7 @@
         app:layout_constraintVertical_bias="0.626" />
 
     <EditText
-        android:id="@+id/editCPassword"
+        android:id="@+id/editUserCreatePasswordConfirm"
         android:layout_width="205dp"
         android:layout_height="43dp"
         android:ems="10"

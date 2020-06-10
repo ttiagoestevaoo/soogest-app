@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
 
         textCreateUser = findViewById(R.id.textCreateUser);
-        textResetPassword = findViewById(R.id.textResetPassword);
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
 
@@ -76,19 +75,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intentIndex);
             finish();
         }
-
-
-
-        textResetPassword.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intentResetPassword = new Intent(getApplicationContext(), ResetPassword.class);
-                        startActivity(intentResetPassword);
-                        finish();
-                    }
-                }
-        );
 
         textCreateUser.setOnClickListener(
                 new View.OnClickListener() {
