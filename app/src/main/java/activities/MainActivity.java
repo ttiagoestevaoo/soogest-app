@@ -1,4 +1,4 @@
-package com.example.soogest.activities;
+package activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,14 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.soogest.R;
-import com.example.soogest.http_requests.HttpCall;
-import com.example.soogest.http_requests.OkHttpRequest;
+import http_requests.HttpCall;
+import http_requests.OkHttpRequest;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
 
-import responses.AccessTokenResponse;
-import responses.ResponseAPI;
+import http_responses.AccessTokenResponse;
+import http_responses.ResponseAPI;
 
 public class MainActivity extends AppCompatActivity {
     TextView textCreateUser, textResetPassword;

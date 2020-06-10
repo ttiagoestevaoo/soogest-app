@@ -1,4 +1,4 @@
-package responses;
+package http_responses;
 
 public class UserResponse {
 

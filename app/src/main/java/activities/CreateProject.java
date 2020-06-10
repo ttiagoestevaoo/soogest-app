@@ -1,11 +1,9 @@
-package com.example.soogest.activities;
+package activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,14 +13,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.soogest.R;
-import com.example.soogest.http_requests.HttpCall;
-import com.example.soogest.http_requests.OkHttpRequest;
-import com.google.gson.Gson;
+import http_requests.HttpCall;
+import http_requests.OkHttpRequest;
 
 import java.util.HashMap;
 
-import responses.ProjectResponse;
-import responses.ResponseAPI;
+import http_responses.ResponseAPI;
 
 
 public class CreateProject extends AppCompatActivity {

@@ -1,9 +1,8 @@
-package com.example.soogest.activities;
+package activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,18 +13,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.soogest.R;
-import com.example.soogest.http_requests.HttpCall;
-import com.example.soogest.http_requests.OkHttpRequest;
+import http_requests.HttpCall;
+import http_requests.OkHttpRequest;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import responses.ProjectResponse;
-import responses.ResponseAPI;
-import responses.UserResponse;
+import http_responses.ProjectResponse;
+import http_responses.ResponseAPI;
 
 
 public class IndexProject extends AppCompatActivity {

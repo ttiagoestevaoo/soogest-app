@@ -1,4 +1,4 @@
-package com.example.soogest.http_requests;
+package http_requests;
 
 import java.util.HashMap;
 
