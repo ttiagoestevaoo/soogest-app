@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
+import http_requests.TokenAccess;
 import http_responses.ResponseAPI;
 import http_responses.UserResponse;
 
@@ -27,17 +28,7 @@ public class Index extends AppCompatActivity {
     Button btnLogout, btnIndexProject, btnIndexTarefas;
     TextView textIndex;
 
-    public String getToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        return sharedPreferences.getString("token","");
-    }
 
-    public void resetToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", "");
-        editor.apply();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +40,7 @@ public class Index extends AppCompatActivity {
         HttpCall htppCall = new HttpCall();
         htppCall.setMethodType(HttpCall.GET);
         htppCall.setUrl("http://soogest-api.herokuapp.com/api/user");
-        htppCall.setToken(getToken());
+        htppCall.setToken(TokenAccess.getInstance().getToken());
         HashMap<String,String> params = new HashMap<>();
         htppCall.setParams(params);
 
@@ -62,8 +53,14 @@ public class Index extends AppCompatActivity {
                     UserResponse userResponse = gson.fromJson(response.getResponseBody(), UserResponse.class);
                     textIndex.setText("Bem vindo " + userResponse.getName() + "!");
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
-                    Log.d("objeto", response.getResponseBody());
-                    Log.d("code", String.valueOf(response.getResponseCode()));
+                    Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
+                    TokenAccess.getInstance().resetToken();
+                    Intent main = new Intent(
+                            getApplicationContext(),
+                            MainActivity.class
+                    );
+                    startActivity(main);
+                    finish();
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
                     Toast.makeText(getApplicationContext(),"Email ou senha incorreta", Toast.LENGTH_SHORT).show();
                 }else{
@@ -83,7 +80,7 @@ public class Index extends AppCompatActivity {
                 HttpCall htppCall = new HttpCall();
                 htppCall.setMethodType(HttpCall.POST);
                 htppCall.setUrl("http://soogest-api.herokuapp.com/api/logout");
-                htppCall.setToken(getToken());
+                htppCall.setToken(TokenAccess.getInstance().getToken());
                 HashMap<String,String> params = new HashMap<>();
                 htppCall.setParams(params);
 
@@ -92,7 +89,7 @@ public class Index extends AppCompatActivity {
                     public void onResponse(ResponseAPI response) {
                         if(response.getResponseCode() == ResponseAPI.HTTP_OK){
                             Toast.makeText(getApplicationContext(),"Logout realizado com sucesso", Toast.LENGTH_SHORT).show();
-                            resetToken();
+                            TokenAccess.getInstance().resetToken();
 
                             Intent main = new Intent(
                                     getApplicationContext(),
@@ -101,7 +98,7 @@ public class Index extends AppCompatActivity {
                             startActivity(main);
                             finish();
                         }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
-                            resetToken();
+                            TokenAccess.getInstance().resetToken();
 
                             Intent main = new Intent(
                                     getApplicationContext(),

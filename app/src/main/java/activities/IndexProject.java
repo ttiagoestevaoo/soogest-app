@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
+import http_requests.TokenAccess;
 import http_responses.ProjectResponse;
 import http_responses.ResponseAPI;
 
@@ -26,20 +27,6 @@ import http_responses.ResponseAPI;
 public class IndexProject extends AppCompatActivity {
     Button btnProjectIndexCreate, btnSave,btnProjectIndexBack;
     ListView listProjects;
-
-
-
-    public void resetToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", "");
-        editor.apply();
-    }
-
-    public String getToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        return sharedPreferences.getString("token","");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +64,7 @@ public class IndexProject extends AppCompatActivity {
         HttpCall htppCall = new HttpCall();
         htppCall.setMethodType(HttpCall.GET);
         htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects");
-        htppCall.setToken(getToken());
+        htppCall.setToken(TokenAccess.getInstance().getToken());
         HashMap<String,String> params = new HashMap<>();
         htppCall.setParams(params);
 
@@ -107,7 +94,7 @@ public class IndexProject extends AppCompatActivity {
                     });
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
-                    resetToken();
+                    TokenAccess.getInstance().resetToken();
                     Intent main = new Intent(
                             getApplicationContext(),
                             MainActivity.class

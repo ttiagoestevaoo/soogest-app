@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 
 import java.util.HashMap;
 
+import http_requests.TokenAccess;
 import http_responses.ProjectResponse;
 import http_responses.ResponseAPI;
 
@@ -29,20 +30,6 @@ public class EditProject extends AppCompatActivity {
     ListView listProjects;
     TextView textProjectCreate;
 
-
-
-
-    public void resetToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", "");
-        editor.apply();
-    }
-
-    public String getToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        return sharedPreferences.getString("token","");
-    }
 
     protected boolean validacao(){
         editProjectCreateName = findViewById(R.id.editProjectCreateName);
@@ -78,7 +65,7 @@ public class EditProject extends AppCompatActivity {
         HttpCall htppCall = new HttpCall();
         htppCall.setMethodType(HttpCall.GET);
         htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects/" + project.getId());
-        htppCall.setToken(getToken());
+        htppCall.setToken( TokenAccess.getInstance().getToken());
         HashMap<String,String> params = new HashMap<>();
         htppCall.setParams(params);
 
@@ -95,7 +82,7 @@ public class EditProject extends AppCompatActivity {
 
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
-                    resetToken();
+                    TokenAccess.getInstance().resetToken();
                     Intent main = new Intent(
                             getApplicationContext(),
                             MainActivity.class
@@ -134,7 +121,7 @@ public class EditProject extends AppCompatActivity {
                     HttpCall htppCall = new HttpCall();
                     htppCall.setMethodType(HttpCall.PUT);
                     htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects/" + project.getId());
-                    htppCall.setToken(getToken());
+                    htppCall.setToken( TokenAccess.getInstance().getToken());
                     HashMap<String,String> params = new HashMap<>();
                     params.put("name", editProjectCreateName.getText().toString());
                     params.put("description", editProjectCreateDescription.getText().toString());
@@ -156,7 +143,7 @@ public class EditProject extends AppCompatActivity {
                                 finish();
                             }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                                 Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
-                                resetToken();
+                                TokenAccess.getInstance().resetToken();
                                 Intent main = new Intent(
                                         getApplicationContext(),
                                         MainActivity.class

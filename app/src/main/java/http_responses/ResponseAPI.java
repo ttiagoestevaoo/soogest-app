@@ -6,6 +6,8 @@ public class ResponseAPI {
     private String responseBody;
 
     public static int HTTP_OK = 200;
+    public static int HTTP_CREATED = 201;
+
     public static int HTTP_UNAUTHORIZED = 401;
     public static int HTTP_BAD_REQUEST = 400;
 

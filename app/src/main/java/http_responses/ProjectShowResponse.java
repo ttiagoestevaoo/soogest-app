@@ -1,16 +1,28 @@
 package http_responses;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class ProjectResponse implements Serializable {
+public class ProjectShowResponse implements Serializable {
 
     private int id;
-    private int user_id;
     private String name;
     private String description;
     private String deadline;
+    private String user_id;
     private String created_at;
     private String updated_at;
+    private ArrayList<TaskResponse> tasks;
+
+
+    public ArrayList<TaskResponse> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(ArrayList<TaskResponse> tasks) {
+        this.tasks = tasks;
+    }
+
 
     public int getId() {
         return id;
@@ -18,14 +30,6 @@ public class ProjectResponse implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
     }
 
     public String getName() {
@@ -52,6 +56,14 @@ public class ProjectResponse implements Serializable {
         this.deadline = deadline;
     }
 
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
     public String getCreated_at() {
         return created_at;
     }
@@ -72,4 +84,5 @@ public class ProjectResponse implements Serializable {
     public String toString() {
         return name;
     }
+
 }

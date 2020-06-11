@@ -18,6 +18,7 @@ import http_requests.OkHttpRequest;
 
 import java.util.HashMap;
 
+import http_requests.TokenAccess;
 import http_responses.ResponseAPI;
 
 
@@ -27,19 +28,6 @@ public class CreateProject extends AppCompatActivity {
     TextView textProjectCreate;
     ListView listProjects;
 
-
-
-    public void resetToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", "");
-        editor.apply();
-    }
-
-    public String getToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        return sharedPreferences.getString("token","");
-    }
 
     protected boolean validacao(){
         editProjectCreateName = findViewById(R.id.editProjectCreateName);
@@ -87,7 +75,7 @@ public class CreateProject extends AppCompatActivity {
                     HttpCall htppCall = new HttpCall();
                     htppCall.setMethodType(HttpCall.POST);
                     htppCall.setUrl("http://soogest-api.herokuapp.com/api/projects");
-                    htppCall.setToken(getToken());
+                    htppCall.setToken( TokenAccess.getInstance().getToken());
                     HashMap<String,String> params = new HashMap<>();
                     params.put("name", editProjectCreateName.getText().toString());
                     params.put("description", editProjectCreateDescription.getText().toString());
@@ -108,8 +96,8 @@ public class CreateProject extends AppCompatActivity {
                                 startActivity(main);
                                 finish();
                             }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
-                                Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
-                                resetToken();
+                                Toast.makeText(getApplicationContext(),"Você precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
+                                TokenAccess.getInstance().resetToken();
                                 Intent main = new Intent(
                                         getApplicationContext(),
                                         MainActivity.class
@@ -117,9 +105,9 @@ public class CreateProject extends AppCompatActivity {
                                 startActivity(main);
                                 finish();
                             }else if(response.getResponseCode() == ResponseAPI.HTTP_BAD_REQUEST){
-                                Toast.makeText(getApplicationContext(),"Não foi posśivel criar o projeto", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Não foi possível criar o projeto", Toast.LENGTH_SHORT).show();
                             }else{
-                                Toast.makeText(getApplicationContext(),"Aconteuceu alguma coisa no servidor", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Aconteceu alguma coisa errada no servidor", Toast.LENGTH_SHORT).show();
 
                             }
 

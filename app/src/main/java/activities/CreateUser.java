@@ -27,20 +27,6 @@ public class CreateUser extends AppCompatActivity {
     TextView textProjectCreate;
     ListView listProjects;
 
-
-
-    public void resetToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("token", "");
-        editor.apply();
-    }
-
-    public String getToken(){
-        SharedPreferences sharedPreferences = getSharedPreferences("token", MODE_PRIVATE);
-        return sharedPreferences.getString("token","");
-    }
-
     protected boolean validacao(){
         editUserCreateName = findViewById(R.id.editUserCreateName);
         editUserCreateEmail = findViewById(R.id.editUserCreateEmail);

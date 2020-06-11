@@ -2,15 +2,16 @@ package http_responses;
 
 import java.io.Serializable;
 
-public class ProjectResponse implements Serializable {
-
+public class TaskResponse implements Serializable {
     private int id;
+    private int project_id;
     private int user_id;
     private String name;
     private String description;
     private String deadline;
     private String created_at;
     private String updated_at;
+    private boolean complete;
 
     public int getId() {
         return id;
@@ -18,6 +19,14 @@ public class ProjectResponse implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(int project_id) {
+        this.project_id = project_id;
     }
 
     public int getUser_id() {
@@ -68,8 +77,16 @@ public class ProjectResponse implements Serializable {
         this.updated_at = updated_at;
     }
 
+    public boolean isComplete() {
+        return complete;
+    }
+
+    public void setComplete(boolean complete) {
+        this.complete = complete;
+    }
+
     @Override
     public String toString() {
-        return name;
+        return  name ;
     }
 }
