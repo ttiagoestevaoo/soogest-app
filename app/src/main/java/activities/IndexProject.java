@@ -79,6 +79,7 @@ public class IndexProject extends AppCompatActivity {
                             getApplicationContext(),
                             android.R.layout.simple_list_item_1,
                             projects);
+
                     listProjects.setAdapter(projectAdapter);
                     listProjects.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

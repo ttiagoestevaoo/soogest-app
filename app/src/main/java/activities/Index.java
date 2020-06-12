@@ -25,7 +25,7 @@ import http_responses.UserResponse;
 
 
 public class Index extends AppCompatActivity {
-    Button btnLogout, btnIndexProject, btnIndexTarefas;
+    Button btnLogout, btnIndexProject, btnIndexTask;
     TextView textIndex;
 
 
@@ -119,6 +119,7 @@ public class Index extends AppCompatActivity {
             }
         });
 
+
         btnIndexProject = findViewById(R.id.btnIndexProject);
 
         btnIndexProject.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +129,21 @@ public class Index extends AppCompatActivity {
                 Intent main = new Intent(
                         getApplicationContext(),
                         IndexProject.class
+                );
+                startActivity(main);
+                finish();
+            }
+        });
+
+        btnIndexTask = findViewById(R.id.btnIndexTask);
+
+        btnIndexTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent main = new Intent(
+                        getApplicationContext(),
+                        IndexTask.class
                 );
                 startActivity(main);
                 finish();

@@ -1,8 +1,6 @@
-package listAdapters;
+package adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.soogest.R;
-import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.List;
 
-import activities.IndexProject;
-import activities.MainActivity;
 import http_requests.HttpCall;
 import http_requests.OkHttpRequest;
 import http_requests.TokenAccess;
-import http_responses.ProjectResponse;
 import http_responses.ResponseAPI;
 import http_responses.TaskResponse;
 

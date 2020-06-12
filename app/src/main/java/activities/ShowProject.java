@@ -3,10 +3,8 @@ package activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -16,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.soogest.R;
+
+import adapters.DateInputAdapter;
 import http_requests.HttpCall;
 import http_requests.OkHttpRequest;
 import com.google.gson.Gson;
@@ -26,8 +26,7 @@ import http_requests.TokenAccess;
 import http_responses.ProjectResponse;
 import http_responses.ProjectShowResponse;
 import http_responses.ResponseAPI;
-import http_responses.TaskResponse;
-import listAdapters.TaskListAdapter;
+import adapters.TaskListAdapter;
 
 
 public class ShowProject extends AppCompatActivity {
@@ -65,7 +64,7 @@ public class ShowProject extends AppCompatActivity {
 
         textProjectName.setText(project.getName());
         textProjectDescription.setText(project.getDescription());
-        textProjectDeadline.setText(project.getDeadline());
+        textProjectDeadline.setText(DateInputAdapter.fromDateFormat(project.getDeadline()));
 
         btnProjectShowTaskCreate = findViewById(R.id.btnProjectShowTaskCreate);
         btnProjectShowBack = findViewById(R.id.btnProjectShowBack);
@@ -152,7 +151,7 @@ public class ShowProject extends AppCompatActivity {
                     final ProjectShowResponse projectApi = gson.fromJson(response.getResponseBody(), ProjectShowResponse.class);
                     textProjectName.setText(projectApi.getName());
                     textProjectDescription.setText(projectApi.getDescription());
-                    textProjectDeadline.setText(projectApi.getDeadline());
+                    textProjectDeadline.setText(DateInputAdapter.fromDateFormat(projectApi.getDeadline()));
 
 
                     TaskListAdapter taskListAdapter = new TaskListAdapter(

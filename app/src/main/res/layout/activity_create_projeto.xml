@@ -48,8 +48,8 @@
 
     <EditText
         android:id="@+id/editProjectCreateDescription"
-        android:layout_width="208dp"
-        android:layout_height="191dp"
+        android:layout_width="217dp"
+        android:layout_height="139dp"
         android:ems="10"
         android:hint="Descricao"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,31 +72,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.125" />
 
-    <EditText
-        android:id="@+id/editProjectCreateDeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Prazo"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.587"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.688" />
-
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="207dp"
-        android:layout_height="34dp"
-        android:text="Format"
-        android:textSize="14sp"
+        android:id="@+id/textProjectCreateDeadline"
+        android:layout_width="208dp"
+        android:layout_height="31dp"
+        android:hint="Prazo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintHorizontal_bias="0.591"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.78" />
+        app:layout_constraintVertical_bias="0.662" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

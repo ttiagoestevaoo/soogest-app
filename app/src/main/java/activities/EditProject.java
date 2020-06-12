@@ -26,17 +26,17 @@ import http_responses.ResponseAPI;
 
 public class EditProject extends AppCompatActivity {
     Button btnProjectCreateBack,btnProjectCreateSave;
-    EditText editProjectCreateName,editProjectCreateDescription,editProjectCreateDeadline;
+    EditText editProjectCreateName,editProjectCreateDescription;
     ListView listProjects;
-    TextView textProjectCreate;
+    TextView textProjectCreate,textProjectCreateDeadline;
 
 
     protected boolean validacao(){
         editProjectCreateName = findViewById(R.id.editProjectCreateName);
-        editProjectCreateDeadline = findViewById(R.id.editProjectCreateDeadline);
+        textProjectCreateDeadline = findViewById(R.id.textProjectCreateDeadline);
         editProjectCreateDescription = findViewById(R.id.editProjectCreateDescription);
 
-        if(editProjectCreateDescription.getText().length() == 0 && editProjectCreateName.getText().length() == 0 && editProjectCreateDescription.getText().length() == 0){
+        if(editProjectCreateDescription.getText().length() == 0 || editProjectCreateName.getText().length() == 0 || textProjectCreateDeadline.getText().length() == 0){
             Toast.makeText(getApplicationContext(),"Digite os dados corretamente para criar o projeto", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -55,12 +55,12 @@ public class EditProject extends AppCompatActivity {
         final ProjectResponse project = (ProjectResponse) itProject.getExtras().getSerializable("project");
 
         editProjectCreateName = findViewById(R.id.editProjectCreateName);
-        editProjectCreateDeadline = findViewById(R.id.editProjectCreateDeadline);
+        textProjectCreateDeadline = findViewById(R.id.textProjectCreateDeadline);
         editProjectCreateDescription = findViewById(R.id.editProjectCreateDescription);
 
         editProjectCreateName.setText(project.getName());
         editProjectCreateDescription.setText(project.getDescription());
-        editProjectCreateDeadline.setText(project.getDeadline());
+        textProjectCreateDeadline.setText(project.getDeadline());
 
         HttpCall htppCall = new HttpCall();
         htppCall.setMethodType(HttpCall.GET);
@@ -78,7 +78,7 @@ public class EditProject extends AppCompatActivity {
                     ProjectResponse projectResponse = gson.fromJson(response.getResponseBody(), ProjectResponse.class);
                     editProjectCreateName.setText(projectResponse.getName());
                     editProjectCreateDescription.setText(projectResponse.getDescription());
-                    editProjectCreateDeadline.setText(projectResponse.getDeadline());
+                    textProjectCreateDeadline.setText(projectResponse.getDeadline());
 
                 }else if(response.getResponseCode() == ResponseAPI.HTTP_UNAUTHORIZED){
                     Toast.makeText(getApplicationContext(),"Voce precisa fazer o login novamente", Toast.LENGTH_SHORT).show();
@@ -125,7 +125,7 @@ public class EditProject extends AppCompatActivity {
                     HashMap<String,String> params = new HashMap<>();
                     params.put("name", editProjectCreateName.getText().toString());
                     params.put("description", editProjectCreateDescription.getText().toString());
-                    params.put("deadline", editProjectCreateDeadline.getText().toString());
+                    params.put("deadline", textProjectCreateDeadline.getText().toString());
                     htppCall.setParams(params);
 
                     new OkHttpRequest(){

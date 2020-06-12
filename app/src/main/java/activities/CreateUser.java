@@ -33,7 +33,7 @@ public class CreateUser extends AppCompatActivity {
         editUserCreatePassword = findViewById(R.id.editUserCreatePassword);
         editUserCreatePasswordConfirm = findViewById(R.id.editUserCreatePasswordConfirm);
 
-        if(editUserCreateName.getText().length() == 0 && editUserCreateEmail.getText().length() == 0 && editUserCreatePassword.getText().length() == 0 && editUserCreatePasswordConfirm.getText().length() == 0){
+        if(editUserCreateName.getText().length() == 0 || editUserCreateEmail.getText().length() == 0 || editUserCreatePassword.getText().length() == 0 || editUserCreatePasswordConfirm.getText().length() == 0){
             Toast.makeText(getApplicationContext(),"Digite os dados corretamente para criar o usuário", Toast.LENGTH_SHORT).show();
             return false;
         }
